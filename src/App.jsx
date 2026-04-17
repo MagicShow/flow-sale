@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import { scripts } from './data/scripts'
 
-// Node ID to display name mapping for breadcrumb
 const NODE_LABELS = {
   start: 'Start',
   intro_confirm: 'Intro',
@@ -18,15 +17,6 @@ const NODE_LABELS = {
   time_pick_spouse: 'Pick Time',
   email_capture: 'Email',
   end: 'End',
-}
-
-function getBreadcrumb(nodeId, nodes, trail = []) {
-  if (!nodeId) return trail
-  const label = NODE_LABELS[nodeId] || nodeId
-  const nextTrail = [...trail, label]
-  const node = nodes[nodeId]
-  // Walk back: follow yes path to find next logical step (simplified — just show trail)
-  return nextTrail
 }
 
 function getTrail(nodeId, nodes, visited = []) {
@@ -91,6 +81,7 @@ function StepCard({ node, color, nodeId, totalSteps, onYes, onNo }) {
 }
 
 export default function App() {
+  const [showLanding, setShowLanding] = useState(true)
   const [activeScriptId, setActiveScriptId] = useState(scripts[0].id)
   const [currentNodeId, setCurrentNodeId] = useState('start')
   const [stepCount, setStepCount] = useState(1)
@@ -128,6 +119,26 @@ export default function App() {
     setStepCount(1)
     setAnimKey((k) => k + 1)
   }, [])
+
+  const handleStart = useCallback(() => {
+    setShowLanding(false)
+  }, [])
+
+  if (showLanding) {
+    return (
+      <div className="landing">
+        <div className="landing-bg" />
+        <div className="landing-content">
+          <div className="landing-logo">Sales Flow</div>
+          <div className="landing-logo-sub">Sales Script Engine</div>
+          <button className="landing-btn" onClick={handleStart}>
+            Get Paid Sonnn
+          </button>
+          <div className="landing-tagline">It's MoneyMaxxing time.</div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="app">

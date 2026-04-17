@@ -6,11 +6,103 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: #F5F5F7;
+  background: #000;
   color: #1D1D1F;
   -webkit-font-smoothing: antialiased;
 }
 
+/* ============================================
+   LANDING PAGE
+   ============================================ */
+.landing {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+  padding: 40px 24px;
+}
+
+.landing-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 90% 65% at 50% -10%, #6B21A8 0%, transparent 55%),
+    radial-gradient(ellipse 55% 45% at 15% 85%, #0071E3 0%, transparent 50%),
+    radial-gradient(ellipse 55% 45% at 85% 88%, #FF2D55 0%, transparent 50%),
+    radial-gradient(ellipse 40% 35% at 75% 20%, #A855F7 0%, transparent 50%),
+    #050505;
+  z-index: 0;
+}
+
+.landing-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.landing-logo {
+  font-size: 54px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FFFFFF 0%, #C084FC 40%, #3B82F6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.05;
+  margin-bottom: 10px;
+  letter-spacing: -1.5px;
+}
+
+.landing-logo-sub {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-bottom: 64px;
+}
+
+.landing-btn {
+  background: linear-gradient(135deg, #A855F7 0%, #3B82F6 100%);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 20px 52px;
+  font-size: 19px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 0 50px rgba(168, 85, 247, 0.4), 0 12px 40px rgba(0,0,0,0.6);
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+  letter-spacing: 0.4px;
+}
+
+.landing-btn:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+}
+
+.landing-btn:active {
+  transform: scale(0.97);
+}
+
+.landing-tagline {
+  margin-top: 28px;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.5px;
+}
+
+/* ============================================
+   APP
+   ============================================ */
 .app {
   min-height: 100vh;
   display: flex;
@@ -65,7 +157,7 @@ body {
 
 .script-text {
   font-size: 18px;
-  line-height: 1.6;
+  line-height: 1.65;
   color: #1D1D1F;
   flex: 1;
   font-weight: 400;
@@ -173,29 +265,8 @@ body {
   color: white;
 }
 
-/* Step transition animations */
 .step-wrapper {
   display: flex;
   flex-direction: column;
   flex: 1;
-}
-
-.step-enter {
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-.step-enter-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 280ms ease-out, transform 280ms ease-out;
-}
-
-.step-exit {
-  opacity: 1;
-}
-
-.step-exit-active {
-  opacity: 0;
-  transition: opacity 180ms ease-in;
 }
