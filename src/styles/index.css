@@ -102,7 +102,7 @@ body {
 }
 
 /* ============================================
-   APP
+   APP SHELL
    ============================================ */
 .app {
   min-height: 100vh;
@@ -137,6 +137,57 @@ body {
   letter-spacing: 0.5px;
 }
 
+/* ============================================
+   NAV BAR (script view)
+   ============================================ */
+.nav-bar {
+  display: flex;
+  align-items: center;
+  padding: 16px 0 4px;
+  gap: 12px;
+}
+
+.nav-title-group {
+  flex: 1;
+  min-width: 0;
+}
+
+.nav-script-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1D1D1F;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-lead-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: #86868B;
+  margin-top: 2px;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  font-size: 15px;
+  font-weight: 500;
+  color: #0071E3;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 4px 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.nav-btn-clear {
+  padding: 4px 0;
+}
+
+/* ============================================
+   CARD + SCRIPT TEXT
+   ============================================ */
 .card {
   background: white;
   border-radius: 18px;
@@ -186,20 +237,55 @@ body {
 
 .btn:active {
   transform: scale(0.98);
-  opacity: 0.9;
 }
 
+/* ============================================
+   YES BUTTON — Apple blue gradient
+   ============================================ */
 .btn-yes {
-  background: #34C759;
+  background: linear-gradient(135deg, #0071E3 0%, #5AC8FA 100%);
+  color: white;
+  border: none;
+}
+
+/* Shimmer overlay */
+.btn-yes::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes yesFlash {
+  0%   { background: linear-gradient(135deg, #0071E3 0%, #5AC8FA 100%); }
+  35%  { background: linear-gradient(135deg, #00C7FF 0%, #5AC8FA 100%); box-shadow: 0 0 28px rgba(90,200,250,0.6); }
+  100% { background: linear-gradient(135deg, #0071E3 0%, #5AC8FA 100%); }
+}
+
+.btn-yes.flash {
+  animation: yesFlash 0.55s ease-out forwards;
+}
+
+/* ============================================
+   NO BUTTON — Apple outline style
+   ============================================ */
+.btn-no {
+  background: transparent;
+  color: #0071E3;
+  border: 2.5px solid #0071E3;
+}
+
+.btn-no:active {
+  background: #0071E3;
   color: white;
 }
 
-.btn-no {
-  background: #F5F5F7;
-  color: #1D1D1F;
-  border: 1px solid #D2D2D7;
-}
-
+/* ============================================
+   RESTART / END
+   ============================================ */
 .btn-restart {
   background: #0071E3;
   color: white;
@@ -232,6 +318,15 @@ body {
   color: #86868B;
 }
 
+.step-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* ============================================
+   SCRIPT TABS
+   ============================================ */
 .tabs {
   display: flex;
   overflow-x: auto;
@@ -243,9 +338,7 @@ body {
   scrollbar-width: none;
 }
 
-.tabs::-webkit-scrollbar {
-  display: none;
-}
+.tabs::-webkit-scrollbar { display: none; }
 
 .tab {
   padding: 8px 16px;
@@ -262,17 +355,9 @@ body {
   font-family: inherit;
 }
 
-.tab.active {
-  color: white;
-}
+.tab.active { color: white; }
 
-.step-wrapper {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-/ ============================================
+/* ============================================
    LEAD CAPTURE PAGE
    ============================================ */
 .capture-page {
@@ -280,7 +365,7 @@ body {
   display: flex;
   flex-direction: column;
   background: #F5F5F7;
-  padding: 20px 16px 100px;
+  padding: 20px 16px 120px;
 }
 
 .capture-header {
@@ -330,7 +415,7 @@ body {
   font-family: inherit;
   color: #1D1D1F;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .field-input:focus {
@@ -338,14 +423,9 @@ body {
   box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
 }
 
-.field-input::placeholder {
-  color: #C7C7CC;
-}
+.field-input::placeholder { color: #C7C7CC; }
 
-/* Script selector section */
-.capture-script-section {
-  margin-bottom: 24px;
-}
+.capture-script-section { margin-bottom: 24px; }
 
 .capture-script-label {
   font-size: 13px;
@@ -371,20 +451,16 @@ body {
   color: #1D1D1F;
   font-family: inherit;
   cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
+  text-align: left;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
 }
 
-.capture-script-chip:hover {
-  border-color: var(--chip-color, #0071E3);
-}
-
-/* Fixed bottom Go button */
 .capture-footer {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 16px 16px 24px;
+  padding: 16px 16px 28px;
   background: linear-gradient(to top, #F5F5F7 70%, transparent 100%);
 }
 

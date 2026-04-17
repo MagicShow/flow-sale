@@ -2,13 +2,13 @@ import React, { useState, useCallback } from 'react'
 import { scripts } from './data/scripts'
 
 const PLACEHOLDER_FIELDS = [
-  { key: 'clientName',      label: 'Client First Name',  placeholder: 'Maria' },
-  { key: 'clientLast',     label: 'Client Last Name',   placeholder: 'Garcia' },
-  { key: 'yourName',       label: 'Your Name',           placeholder: 'James' },
-  { key: 'unionName',      label: 'Union / Sponsor Org', placeholder: 'Iron Workers Local 17' },
-  { key: 'sponsorName',    label: 'Sponsor Name',        placeholder: 'Carlos' },
-  { key: 'beneficiary',    label: 'Beneficiary Name',    placeholder: 'Alex' },
-  { key: 'spouseName',     label: 'Spouse / Partner',   placeholder: 'Rosa' },
+  { key: 'clientName',   label: 'Client First Name',  placeholder: 'Maria' },
+  { key: 'clientLast',  label: 'Client Last Name',   placeholder: 'Garcia' },
+  { key: 'yourName',    label: 'Your Name',           placeholder: 'James' },
+  { key: 'unionName',   label: 'Union / Sponsor Org', placeholder: 'Iron Workers Local 17' },
+  { key: 'sponsorName', label: 'Sponsor Name',        placeholder: 'Carlos' },
+  { key: 'beneficiary', label: 'Beneficiary Name',    placeholder: 'Alex' },
+  { key: 'spouseName',  label: 'Spouse / Partner',   placeholder: 'Rosa' },
 ]
 
 const NODE_LABELS = {
@@ -39,7 +39,15 @@ function EndCard({ color, onRestart }) {
 }
 
 function StepCard({ node, color, totalSteps, onYes, onNo }) {
+  const [yesFlash, setYesFlash] = useState(false)
   const isEnd = node.yes === null && node.no === null
+
+  const handleYes = () => {
+    setYesFlash(true)
+    setTimeout(() => setYesFlash(false), 550)
+    onYes()
+  }
+
   return (
     <div className="card">
       <div className="step-indicator">Step {totalSteps}</div>
@@ -53,10 +61,14 @@ function StepCard({ node, color, totalSteps, onYes, onNo }) {
       ) : (
         <div className="buttons">
           {node.yes !== undefined && (
-            <button className="btn btn-yes" onClick={onYes}>YES</button>
+            <button className={`btn btn-yes${yesFlash ? ' flash' : ''}`} onClick={handleYes}>
+              YES
+            </button>
           )}
           {node.no !== undefined && node.no !== null && (
-            <button className="btn btn-no" onClick={onNo}>NO</button>
+            <button className="btn btn-no" onClick={onNo}>
+              NO
+            </button>
           )}
         </div>
       )}
@@ -71,6 +83,7 @@ function LeadCapture({ onStart }) {
   const [fields, setFields] = useState(() =>
     Object.fromEntries(PLACEHOLDER_FIELDS.map(f => [f.key, '']))
   )
+  const [selectedScript, setSelectedScript] = useState(scripts[0].id)
 
   const handleChange = useCallback((key, val) => {
     setFields(prev => ({ ...prev, [key]: val }))
@@ -98,20 +111,27 @@ function LeadCapture({ onStart }) {
         ))}
       </div>
 
-      {/* Script selector — lives below fields */}
+      {/* Script selector */}
       <div className="capture-script-section">
         <div className="capture-script-label">Select Script</div>
         <div className="capture-script-grid">
           {scripts.map(s => (
-            <div key={s.id} className="capture-script-chip" style={{ '--chip-color': s.color }}>
+            <button
+              key={s.id}
+              className={`capture-script-chip${selectedScript === s.id ? ' selected' : ''}`}
+              style={selectedScript === s.id
+                ? { borderColor: s.color, background: s.color + '18', color: s.color }
+                : {}}
+              onClick={() => setSelectedScript(s.id)}
+            >
               {s.title}
-            </div>
+            </button>
           ))}
         </div>
       </div>
 
       <div className="capture-footer">
-        <button className="capture-go-btn" onClick={() => onStart(fields)}>
+        <button className="capture-go-btn" onClick={() => onStart(fields, selectedScript)}>
           Go →
         </button>
       </div>
@@ -123,7 +143,7 @@ function LeadCapture({ onStart }) {
    MAIN APP
    ============================================================ */
 export default function App() {
-  const [view, setView] = useState('landing') // landing | capture | script
+  const [view, setView] = useState('landing')
   const [vars, setVars] = useState({})
   const [activeScriptId, setActiveScriptId] = useState(scripts[0].id)
   const [currentNodeId, setCurrentNodeId] = useState('start')
@@ -135,7 +155,10 @@ export default function App() {
   const trail = getTrail(currentNodeId, activeScript.nodes)
   const isAtEnd = currentNode && currentNode.yes === null && currentNode.no === null
 
-  // Replace [VAR] tokens in script text with actual values
+  const displayName = vars.clientName
+    ? `${vars.clientName}${vars.clientLast ? ' ' + vars.clientLast : ''}`
+    : 'Generic'
+
   const resolveText = useCallback((text) => {
     if (!text) return ''
     return text.replace(/\[([A-Z_]+)\]/g, (_, key) => {
@@ -150,7 +173,7 @@ export default function App() {
         SPOUSE: vars.spouseName || '[SPOUSE]',
         TIME: '3:00 PM',
       }
-      return lookup[key] || _ // leave unknown tokens as-is
+      return lookup[key] || _
     })
   }, [vars])
 
@@ -182,6 +205,14 @@ export default function App() {
     setAnimKey(k => k + 1)
   }, [])
 
+  const handleClear = useCallback(() => {
+    setVars({})
+    setActiveScriptId(scripts[0].id)
+    setCurrentNodeId('start')
+    setStepCount(1)
+    setAnimKey(k => k + 1)
+  }, [])
+
   /* ---- Landing ---- */
   if (view === 'landing') {
     return (
@@ -204,10 +235,14 @@ export default function App() {
     return (
       <div className="app">
         <div className="header">
-          <div className="accent-bar" style={{ background: activeScript.color }} />
+          <div className="accent-bar" style={{ background: '#86868B' }} />
           <div className="header-title">Lead Info</div>
         </div>
-        <LeadCapture onStart={(fields) => { setVars(fields); setView('script') }} />
+        <LeadCapture onStart={(fields, scriptId) => {
+          setVars(fields)
+          if (scriptId) setActiveScriptId(scriptId)
+          setView('script')
+        }} />
       </div>
     )
   }
@@ -217,7 +252,14 @@ export default function App() {
     <div className="app">
       <div className="header">
         <div className="accent-bar" style={{ background: activeScript.color }} />
-        <div className="header-title">Sales Script</div>
+        <div className="nav-bar">
+          <button className="nav-btn" onClick={() => setView('capture')}>← Back</button>
+          <div className="nav-title-group">
+            <div className="nav-script-name">Sales Script — {activeScript.title}</div>
+            <div className="nav-lead-name">{displayName}</div>
+          </div>
+          <button className="nav-btn nav-btn-clear" onClick={handleClear}>Clear</button>
+        </div>
         <div className="progress">{trail.length > 0 ? trail.join(' → ') : 'Start'}</div>
       </div>
 
