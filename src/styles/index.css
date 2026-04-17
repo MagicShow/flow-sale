@@ -271,3 +271,139 @@ body {
   flex-direction: column;
   flex: 1;
 }
+
+/ ============================================
+   LEAD CAPTURE PAGE
+   ============================================ */
+.capture-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #F5F5F7;
+  padding: 20px 16px 100px;
+}
+
+.capture-header {
+  margin-bottom: 24px;
+}
+
+.capture-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1D1D1F;
+  margin-bottom: 6px;
+}
+
+.capture-subtitle {
+  font-size: 14px;
+  color: #86868B;
+  line-height: 1.5;
+}
+
+.capture-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1D1D1F;
+  letter-spacing: 0.2px;
+}
+
+.field-input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1.5px solid #D2D2D7;
+  background: white;
+  font-size: 16px;
+  font-family: inherit;
+  color: #1D1D1F;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.field-input:focus {
+  border-color: #0071E3;
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+}
+
+.field-input::placeholder {
+  color: #C7C7CC;
+}
+
+/* Script selector section */
+.capture-script-section {
+  margin-bottom: 24px;
+}
+
+.capture-script-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1D1D1F;
+  margin-bottom: 12px;
+  letter-spacing: 0.2px;
+}
+
+.capture-script-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.capture-script-chip {
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: white;
+  border: 1.5px solid #D2D2D7;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1D1D1F;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.capture-script-chip:hover {
+  border-color: var(--chip-color, #0071E3);
+}
+
+/* Fixed bottom Go button */
+.capture-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 16px 24px;
+  background: linear-gradient(to top, #F5F5F7 70%, transparent 100%);
+}
+
+.capture-go-btn {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, #A855F7 0%, #3B82F6 100%);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(168, 85, 247, 0.35);
+  transition: transform 0.15s, opacity 0.15s;
+}
+
+.capture-go-btn:active {
+  transform: scale(0.98);
+  opacity: 0.92;
+}
