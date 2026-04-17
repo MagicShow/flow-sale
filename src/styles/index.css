@@ -65,7 +65,7 @@ body {
   color: rgba(255, 255, 255, 0.45);
   letter-spacing: 5px;
   text-transform: uppercase;
-  margin-bottom: 64px;
+  margin-bottom: 40px;
 }
 
 .landing-btn {
@@ -93,10 +93,11 @@ body {
 }
 
 .landing-tagline {
-  margin-top: 28px;
-  font-size: 16px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.5);
+  margin-top: 0;
+  margin-bottom: 40px;
+  font-size: 32px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.55);
   letter-spacing: 0.5px;
 }
 

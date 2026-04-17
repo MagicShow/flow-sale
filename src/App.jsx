@@ -131,10 +131,10 @@ export default function App() {
         <div className="landing-content">
           <div className="landing-logo">Sales Flow</div>
           <div className="landing-logo-sub">Sales Script Engine</div>
-          <button className="landing-btn" onClick={handleStart}>
-            Get Paid Sonnn
-          </button>
           <div className="landing-tagline">It's MoneyMaxxing time.</div>
+          <button className="landing-btn" onClick={handleStart}>
+            Get Started
+          </button>
         </div>
       </div>
     )
