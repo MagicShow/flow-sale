@@ -125,6 +125,7 @@ function LeadCapture({ onStart }) {
 
   return (
     <div className="capture-page">
+      <div className="capture-headline">Enter lead info</div>
       <div className="capture-form-wrap">
         {PLACEHOLDER_FIELDS.map(f => (
           <div className="field-group" key={f.key}>

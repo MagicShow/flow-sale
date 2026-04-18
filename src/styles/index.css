@@ -317,6 +317,16 @@ body {
   padding: 48px 16px 120px;
 }
 
+.capture-headline {
+  width: 100%;
+  max-width: 540px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: -0.5px;
+  margin-bottom: 28px;
+}
+
 .capture-form-wrap {
   width: 100%;
   max-width: 540px;
