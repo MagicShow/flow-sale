@@ -192,6 +192,12 @@ body {
   font-weight: 400;
 }
 
+.script-token {
+  color: #0071E3;
+  font-weight: 700;
+  font-size: 18px;
+}
+
 .buttons {
   display: flex;
   flex-direction: column;

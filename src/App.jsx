@@ -25,6 +25,40 @@ function getTrail(nodeId, nodes, visited = []) {
   return getTrail(nodes[nodeId]?.yes, nodes, [...visited, label])
 }
 
+/* Split raw script text into {text, highlight} segments */
+function tokenize(text, vars) {
+  if (!text) return [{ text: '', highlight: false }]
+  const lookup = {
+    NAME: vars.clientName || null,
+    'LAST NAME': vars.clientLast || null,
+    LAST_NAME: vars.clientLast || null,
+    'YOUR NAME': vars.yourName || null,
+    UNION: vars.unionName || null,
+    'INSERT UNION': vars.unionName || null,
+    SPONSOR: vars.sponsorName || null,
+    'BENEFICIARY NAME': vars.beneficiary || null,
+    'SPOUSE NAME': vars.spouseName || null,
+    SPOUSE: vars.spouseName || null,
+    TIME: '3:00 PM',
+  }
+  const parts = []
+  const regex = /\[([A-Z_ ]+)\]/g
+  let lastIndex = 0
+  let match
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push({ text: text.slice(lastIndex, match.index), highlight: false })
+    }
+    const resolved = lookup[match[1]]
+    parts.push({ text: resolved || match[0], highlight: !!resolved })
+    lastIndex = regex.lastIndex
+  }
+  if (lastIndex < text.length) {
+    parts.push({ text: text.slice(lastIndex), highlight: false })
+  }
+  return parts
+}
+
 function EndCard({ color, onRestart }) {
   return (
     <div className="end-card">
@@ -38,9 +72,9 @@ function EndCard({ color, onRestart }) {
   )
 }
 
-function StepCard({ node, color, totalSteps, onYes, onNo }) {
+function StepCard({ segments, color, totalSteps, onYes, onNo }) {
   const [yesFlash, setYesFlash] = useState(false)
-  const isEnd = node.yes === null && node.no === null
+  const isEnd = !segments // no segments = end node
 
   const handleYes = () => {
     setYesFlash(true)
@@ -51,27 +85,23 @@ function StepCard({ node, color, totalSteps, onYes, onNo }) {
   return (
     <div className="card">
       <div className="step-indicator">Step {totalSteps}</div>
-      <div className="script-text">{node.text}</div>
-      {isEnd ? (
-        <div style={{ marginTop: 24 }}>
-          <button className="btn btn-yes" style={{ background: color, opacity: 0.5, cursor: 'default' }} disabled>
-            ✅ Script Complete
-          </button>
-        </div>
-      ) : (
-        <div className="buttons">
-          {node.yes !== undefined && (
-            <button className={`btn btn-yes${yesFlash ? ' flash' : ''}`} onClick={handleYes}>
-              YES
-            </button>
-          )}
-          {node.no !== undefined && node.no !== null && (
-            <button className="btn btn-no" onClick={onNo}>
-              NO
-            </button>
-          )}
-        </div>
-      )}
+      <div className="script-text">
+        {segments.map((seg, i) =>
+          seg.highlight ? (
+            <span key={i} className="script-token">{seg.text}</span>
+          ) : (
+            <span key={i}>{seg.text}</span>
+          )
+        )}
+      </div>
+      <div className="buttons">
+        <button className={`btn btn-yes${yesFlash ? ' flash' : ''}`} onClick={handleYes}>
+          YES
+        </button>
+        <button className="btn btn-no" onClick={onNo}>
+          NO
+        </button>
+      </div>
     </div>
   )
 }
@@ -90,7 +120,7 @@ function LeadCapture({ onStart }) {
   }, [])
 
   const handleSkip = useCallback(() => {
-    onStart(Object.fromEntries(PLACEHOLDER_FIELDS.map(f => [f.key, f.defaultValue || ''])), selectedScript)
+    onStart(Object.fromEntries(PLACEHOLDER_FIELDS.map(f => [f.key, ''])), selectedScript)
   }, [selectedScript, onStart])
 
   return (
@@ -160,30 +190,11 @@ export default function App() {
   const currentNode = activeScript.nodes[currentNodeId]
   const trail = getTrail(currentNodeId, activeScript.nodes)
   const isAtEnd = currentNode && currentNode.yes === null && currentNode.no === null
+  const segments = isAtEnd ? null : tokenize(currentNode.text, vars)
 
   const displayName = vars.clientName
     ? `${vars.clientName}${vars.clientLast ? ' ' + vars.clientLast : ''}`
     : 'Generic'
-
-  const resolveText = useCallback((text) => {
-    if (!text) return ''
-    return text.replace(/\[([A-Z_ ]+)\]/g, (_, key) => {
-      const lookup = {
-        NAME: vars.clientName || '[NAME]',
-        LAST NAME: vars.clientLast || '[LAST NAME]',
-        LAST_NAME: vars.clientLast || '[LAST NAME]',
-        YOUR NAME: vars.yourName || '[YOUR NAME]',
-        UNION: vars.unionName || '[UNION]',
-        INSERT UNION: vars.unionName || '[INSERT UNION]',
-        SPONSOR: vars.sponsorName || '[SPONSOR]',
-        BENEFICIARY NAME: vars.beneficiary || '[BENEFICIARY NAME]',
-        SPOUSE NAME: vars.spouseName || '[SPOUSE NAME]',
-        SPOUSE: vars.spouseName || '[SPOUSE]',
-        TIME: '3:00 PM',
-      }
-      return lookup[key] || _
-    })
-  }, [vars])
 
   const navigate = useCallback((nextNodeId) => {
     if (!nextNodeId) return
@@ -214,7 +225,7 @@ export default function App() {
   }, [])
 
   const handleClear = useCallback(() => {
-    setVars({})
+    setVars({ yourName: 'Dagen' })
     setActiveScriptId(scripts[0].id)
     setCurrentNodeId('start')
     setStepCount(1)
@@ -272,13 +283,25 @@ export default function App() {
       </div>
 
       <div className="step-wrapper" key={animKey}>
-        <StepCard
-          node={{ ...currentNode, text: resolveText(currentNode.text) }}
-          color={activeScript.color}
-          totalSteps={stepCount}
-          onYes={handleYes}
-          onNo={handleNo}
-        />
+        {isAtEnd ? (
+          <div className="card">
+            <div className="step-indicator">Step {stepCount}</div>
+            <div className="script-text">{currentNode.text}</div>
+            <div style={{ marginTop: 24 }}>
+              <button className="btn btn-yes" style={{ background: activeScript.color, opacity: 0.5, cursor: 'default' }} disabled>
+                ✅ Script Complete
+              </button>
+            </div>
+          </div>
+        ) : (
+          <StepCard
+            segments={segments}
+            color={activeScript.color}
+            totalSteps={stepCount}
+            onYes={handleYes}
+            onNo={handleNo}
+          />
+        )}
         {isAtEnd && (
           <div style={{ padding: '0 16px 8px' }}>
             <EndCard color={activeScript.color} onRestart={handleRestart} />
