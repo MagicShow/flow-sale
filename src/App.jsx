@@ -4,7 +4,7 @@ import { scripts } from './data/scripts'
 const PLACEHOLDER_FIELDS = [
   { key: 'clientName',   label: 'Client First Name',  placeholder: 'Maria' },
   { key: 'clientLast',  label: 'Client Last Name',   placeholder: 'Garcia' },
-  { key: 'yourName',    label: 'Your Name',           placeholder: 'James' },
+  { key: 'yourName',    label: 'Your Name',           placeholder: 'Dagen', defaultValue: 'Dagen' },
   { key: 'unionName',   label: 'Union / Sponsor Org', placeholder: 'Iron Workers Local 17' },
   { key: 'sponsorName', label: 'Sponsor Name',        placeholder: 'Carlos' },
   { key: 'beneficiary', label: 'Beneficiary Name',    placeholder: 'Alex' },
@@ -81,7 +81,7 @@ function StepCard({ node, color, totalSteps, onYes, onNo }) {
    ============================================================ */
 function LeadCapture({ onStart }) {
   const [fields, setFields] = useState(() =>
-    Object.fromEntries(PLACEHOLDER_FIELDS.map(f => [f.key, '']))
+    Object.fromEntries(PLACEHOLDER_FIELDS.map(f => [f.key, f.defaultValue || '']))
   )
   const [selectedScript, setSelectedScript] = useState(scripts[0].id)
 
@@ -90,7 +90,7 @@ function LeadCapture({ onStart }) {
   }, [])
 
   const handleSkip = useCallback(() => {
-    onStart(Object.fromEntries(PLACEHOLDER_FIELDS.map(f => [f.key, ''])), selectedScript)
+    onStart(Object.fromEntries(PLACEHOLDER_FIELDS.map(f => [f.key, f.defaultValue || ''])), selectedScript)
   }, [selectedScript, onStart])
 
   return (
@@ -150,7 +150,7 @@ function LeadCapture({ onStart }) {
    ============================================================ */
 export default function App() {
   const [view, setView] = useState('landing')
-  const [vars, setVars] = useState({})
+  const [vars, setVars] = useState({ yourName: 'Dagen' })
   const [activeScriptId, setActiveScriptId] = useState(scripts[0].id)
   const [currentNodeId, setCurrentNodeId] = useState('start')
   const [stepCount, setStepCount] = useState(1)
