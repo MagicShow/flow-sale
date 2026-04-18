@@ -89,6 +89,10 @@ function LeadCapture({ onStart }) {
     setFields(prev => ({ ...prev, [key]: val }))
   }, [])
 
+  const handleSkip = useCallback(() => {
+    onStart(Object.fromEntries(PLACEHOLDER_FIELDS.map(f => [f.key, ''])), selectedScript)
+  }, [selectedScript, onStart])
+
   return (
     <div className="capture-page">
       <div className="capture-header">
@@ -96,7 +100,7 @@ function LeadCapture({ onStart }) {
         <div className="capture-subtitle">Fill in what you know — the script adapts automatically.</div>
       </div>
 
-      <div className="capture-form">
+      <div className="capture-form-wrap">
         {PLACEHOLDER_FIELDS.map(f => (
           <div className="field-group" key={f.key}>
             <label className="field-label">{f.label}</label>
@@ -111,7 +115,6 @@ function LeadCapture({ onStart }) {
         ))}
       </div>
 
-      {/* Script selector */}
       <div className="capture-script-section">
         <div className="capture-script-label">Select Script</div>
         <div className="capture-script-grid">
@@ -119,9 +122,7 @@ function LeadCapture({ onStart }) {
             <button
               key={s.id}
               className={`capture-script-chip${selectedScript === s.id ? ' selected' : ''}`}
-              style={selectedScript === s.id
-                ? { borderColor: s.color, background: s.color + '18', color: s.color }
-                : {}}
+              style={selectedScript === s.id ? { background: s.color } : {}}
               onClick={() => setSelectedScript(s.id)}
             >
               {s.title}
@@ -132,7 +133,10 @@ function LeadCapture({ onStart }) {
 
       <div className="capture-footer">
         <button className="capture-go-btn" onClick={() => onStart(fields, selectedScript)}>
-          Go →
+          Launch <span aria-hidden="true">🚀</span>
+        </button>
+        <button className="capture-skip-btn" onClick={handleSkip}>
+          Skip
         </button>
       </div>
     </div>
@@ -258,7 +262,7 @@ export default function App() {
             <div className="nav-script-name">Sales Script — {activeScript.title}</div>
             <div className="nav-lead-name">{displayName}</div>
           </div>
-          <button className="nav-btn nav-btn-clear" onClick={handleClear}>Clear</button>
+          <button className="nav-btn" onClick={handleClear}>Clear</button>
         </div>
         <div className="progress">{trail.length > 0 ? trail.join(' → ') : 'Start'}</div>
       </div>

@@ -68,6 +68,15 @@ body {
   margin-bottom: 40px;
 }
 
+.landing-tagline {
+  margin-top: 0;
+  margin-bottom: 40px;
+  font-size: 32px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.5px;
+}
+
 .landing-btn {
   background: linear-gradient(135deg, #A855F7 0%, #3B82F6 100%);
   color: white;
@@ -83,23 +92,8 @@ body {
   letter-spacing: 0.4px;
 }
 
-.landing-btn:hover {
-  opacity: 0.92;
-  transform: translateY(-2px);
-}
-
-.landing-btn:active {
-  transform: scale(0.97);
-}
-
-.landing-tagline {
-  margin-top: 0;
-  margin-bottom: 40px;
-  font-size: 32px;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.55);
-  letter-spacing: 0.5px;
-}
+.landing-btn:hover { opacity: 0.92; transform: translateY(-2px); }
+.landing-btn:active { transform: scale(0.97); }
 
 /* ============================================
    APP SHELL
@@ -117,17 +111,7 @@ body {
   border-bottom: 1px solid #D2D2D7;
 }
 
-.header-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: #1D1D1F;
-  padding: 20px 0 12px;
-}
-
-.accent-bar {
-  height: 4px;
-  width: 100%;
-}
+.accent-bar { height: 4px; width: 100%; }
 
 .progress {
   padding: 10px 0;
@@ -147,10 +131,7 @@ body {
   gap: 12px;
 }
 
-.nav-title-group {
-  flex: 1;
-  min-width: 0;
-}
+.nav-title-group { flex: 1; min-width: 0; }
 
 .nav-script-name {
   font-size: 17px;
@@ -181,12 +162,8 @@ body {
   flex-shrink: 0;
 }
 
-.nav-btn-clear {
-  padding: 4px 0;
-}
-
 /* ============================================
-   CARD + SCRIPT TEXT
+   CARD + SCRIPT
    ============================================ */
 .card {
   background: white;
@@ -231,24 +208,20 @@ body {
   font-weight: 600;
   border: none;
   cursor: pointer;
-  transition: opacity 0.2s, transform 0.1s;
+  transition: transform 0.1s;
   font-family: inherit;
 }
 
-.btn:active {
-  transform: scale(0.98);
-}
+.btn:active { transform: scale(0.98); }
 
-/* ============================================
-   YES BUTTON — Apple blue gradient
-   ============================================ */
+/* YES — Apple blue gradient + flash */
 .btn-yes {
   background: linear-gradient(135deg, #0071E3 0%, #5AC8FA 100%);
   color: white;
-  border: none;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Shimmer overlay */
 .btn-yes::after {
   content: '';
   position: absolute;
@@ -261,36 +234,23 @@ body {
 
 @keyframes yesFlash {
   0%   { background: linear-gradient(135deg, #0071E3 0%, #5AC8FA 100%); }
-  35%  { background: linear-gradient(135deg, #00C7FF 0%, #5AC8FA 100%); box-shadow: 0 0 28px rgba(90,200,250,0.6); }
+  35%  { background: linear-gradient(135deg, #00C7FF 0%, #5AC8FA 100%); box-shadow: 0 0 28px rgba(90,200,250,0.55); }
   100% { background: linear-gradient(135deg, #0071E3 0%, #5AC8FA 100%); }
 }
 
-.btn-yes.flash {
-  animation: yesFlash 0.55s ease-out forwards;
-}
+.btn-yes.flash { animation: yesFlash 0.55s ease-out forwards; }
 
-/* ============================================
-   NO BUTTON — Apple outline style
-   ============================================ */
+/* NO — Apple outline blue */
 .btn-no {
   background: transparent;
   color: #0071E3;
   border: 2.5px solid #0071E3;
 }
 
-.btn-no:active {
-  background: #0071E3;
-  color: white;
-}
+.btn-no:active { background: #0071E3; color: white; }
 
-/* ============================================
-   RESTART / END
-   ============================================ */
-.btn-restart {
-  background: #0071E3;
-  color: white;
-  margin-top: 16px;
-}
+/* Restart */
+.btn-restart { background: #0071E3; color: white; margin-top: 16px; }
 
 .end-card {
   display: flex;
@@ -301,28 +261,11 @@ body {
   flex: 1;
 }
 
-.end-icon {
-  font-size: 48px;
-  margin-bottom: 16px;
-}
+.end-icon { font-size: 48px; margin-bottom: 16px; }
+.end-title { font-size: 20px; font-weight: 600; color: #1D1D1F; margin-bottom: 8px; }
+.end-sub { font-size: 14px; color: #86868B; }
 
-.end-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: #1D1D1F;
-  margin-bottom: 8px;
-}
-
-.end-sub {
-  font-size: 14px;
-  color: #86868B;
-}
-
-.step-wrapper {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
+.step-wrapper { display: flex; flex-direction: column; flex: 1; }
 
 /* ============================================
    SCRIPT TABS
@@ -364,12 +307,24 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
   background: #F5F5F7;
   padding: 20px 16px 120px;
 }
 
+.capture-form-wrap {
+  width: 100%;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
 .capture-header {
-  margin-bottom: 24px;
+  width: 100%;
+  max-width: 540px;
+  margin-bottom: 4px;
 }
 
 .capture-title {
@@ -385,54 +340,55 @@ body {
   line-height: 1.5;
 }
 
-.capture-form {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-bottom: 28px;
-}
-
 .field-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0;
 }
 
 .field-label {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  color: #1D1D1F;
-  letter-spacing: 0.2px;
+  color: #86868B;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
 }
 
 .field-input {
   width: 100%;
-  padding: 14px 16px;
+  padding: 15px 16px;
   border-radius: 12px;
-  border: 1.5px solid #D2D2D7;
-  background: white;
+  border: none;
+  background: #2D2D2E;
   font-size: 16px;
   font-family: inherit;
-  color: #1D1D1F;
+  font-weight: 600;
+  color: #FFFFFF;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: box-shadow 0.2s;
 }
 
 .field-input:focus {
-  border-color: #0071E3;
-  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.45);
 }
 
-.field-input::placeholder { color: #C7C7CC; }
+.field-input::placeholder { color: #6B6B6B; font-weight: 400; }
 
-.capture-script-section { margin-bottom: 24px; }
+/* Script selector */
+.capture-script-section {
+  width: 100%;
+  max-width: 540px;
+  margin-bottom: 24px;
+}
 
 .capture-script-label {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  color: #1D1D1F;
+  color: #86868B;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
   margin-bottom: 12px;
-  letter-spacing: 0.2px;
 }
 
 .capture-script-grid {
@@ -442,30 +398,42 @@ body {
 }
 
 .capture-script-chip {
-  padding: 12px 16px;
+  padding: 13px 16px;
   border-radius: 12px;
   background: white;
   border: 1.5px solid #D2D2D7;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   color: #1D1D1F;
   font-family: inherit;
   cursor: pointer;
   text-align: left;
-  transition: border-color 0.2s, background 0.2s, color 0.2s;
+  transition: all 0.18s;
+  -webkit-appearance: none;
+  letter-spacing: 0.2px;
 }
 
+.capture-script-chip.selected {
+  border-color: transparent;
+  color: white;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+}
+
+/* Bottom action bar */
 .capture-footer {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   padding: 16px 16px 28px;
-  background: linear-gradient(to top, #F5F5F7 70%, transparent 100%);
+  background: linear-gradient(to top, #F5F5F7 80%, transparent 100%);
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
 .capture-go-btn {
-  width: 100%;
+  flex: 1;
   padding: 18px;
   background: linear-gradient(135deg, #A855F7 0%, #3B82F6 100%);
   color: white;
@@ -477,9 +445,28 @@ body {
   cursor: pointer;
   box-shadow: 0 8px 32px rgba(168, 85, 247, 0.35);
   transition: transform 0.15s, opacity 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: 0.3px;
 }
 
-.capture-go-btn:active {
-  transform: scale(0.98);
-  opacity: 0.92;
+.capture-go-btn:active { transform: scale(0.98); opacity: 0.92; }
+
+.capture-skip-btn {
+  padding: 18px 20px;
+  background: transparent;
+  color: #86868B;
+  border: 1.5px solid #D2D2D7;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+  letter-spacing: 0.2px;
 }
+
+.capture-skip-btn:active { opacity: 0.55; }
