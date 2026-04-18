@@ -314,18 +314,19 @@ body {
   flex-direction: column;
   align-items: center;
   background: #000;
-  padding: 48px 16px 120px;
+  padding: 32px 16px 120px;
 }
 
 .capture-headline {
   width: 100%;
   max-width: 540px;
-  font-size: 26px;
-  font-weight: 700;
+  font-size: 32px;
+  font-weight: 800;
   color: #FFFFFF;
   letter-spacing: -0.5px;
-  margin-bottom: 28px;
+  margin-bottom: 6px;
 }
+
 
 .capture-form-wrap {
   width: 100%;
