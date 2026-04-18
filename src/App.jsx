@@ -125,11 +125,6 @@ function LeadCapture({ onStart }) {
 
   return (
     <div className="capture-page">
-      <div className="capture-header">
-        <div className="capture-title">Lead Info</div>
-        <div className="capture-subtitle">Fill in what you know — the script adapts automatically.</div>
-      </div>
-
       <div className="capture-form-wrap">
         {PLACEHOLDER_FIELDS.map(f => (
           <div className="field-group" key={f.key}>
@@ -251,19 +246,11 @@ export default function App() {
 
   /* ---- Lead Capture ---- */
   if (view === 'capture') {
-    return (
-      <div className="app">
-        <div className="header">
-          <div className="accent-bar" style={{ background: '#86868B' }} />
-          <div className="header-title">Lead Info</div>
-        </div>
-        <LeadCapture onStart={(fields, scriptId) => {
-          setVars(fields)
-          if (scriptId) setActiveScriptId(scriptId)
-          setView('script')
-        }} />
-      </div>
-    )
+    return <LeadCapture onStart={(fields, scriptId) => {
+      setVars(fields)
+      if (scriptId) setActiveScriptId(scriptId)
+      setView('script')
+    }} />
   }
 
   /* ---- Script View ---- */

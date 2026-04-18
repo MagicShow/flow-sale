@@ -7,7 +7,7 @@
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   background: #000;
-  color: #1D1D1F;
+  color: #FFFFFF;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -88,7 +88,7 @@ body {
   cursor: pointer;
   font-family: inherit;
   box-shadow: 0 0 50px rgba(168, 85, 247, 0.4), 0 12px 40px rgba(0,0,0,0.6);
-  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+  transition: transform 0.15s, opacity 0.15s;
   letter-spacing: 0.4px;
 }
 
@@ -122,7 +122,7 @@ body {
 }
 
 /* ============================================
-   NAV BAR (script view)
+   NAV BAR
    ============================================ */
 .nav-bar {
   display: flex;
@@ -220,7 +220,7 @@ body {
 
 .btn:active { transform: scale(0.98); }
 
-/* YES — Apple blue gradient + flash */
+/* YES */
 .btn-yes {
   background: linear-gradient(135deg, #0071E3 0%, #5AC8FA 100%);
   color: white;
@@ -246,7 +246,7 @@ body {
 
 .btn-yes.flash { animation: yesFlash 0.55s ease-out forwards; }
 
-/* NO — Apple outline blue */
+/* NO */
 .btn-no {
   background: transparent;
   color: #0071E3;
@@ -255,7 +255,6 @@ body {
 
 .btn-no:active { background: #0071E3; color: white; }
 
-/* Restart */
 .btn-restart { background: #0071E3; color: white; margin-top: 16px; }
 
 .end-card {
@@ -307,15 +306,15 @@ body {
 .tab.active { color: white; }
 
 /* ============================================
-   LEAD CAPTURE PAGE
+   LEAD CAPTURE PAGE — dark, no header bar
    ============================================ */
 .capture-page {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #F5F5F7;
-  padding: 20px 16px 120px;
+  background: #000;
+  padding: 48px 16px 120px;
 }
 
 .capture-form-wrap {
@@ -327,25 +326,6 @@ body {
   margin-bottom: 28px;
 }
 
-.capture-header {
-  width: 100%;
-  max-width: 540px;
-  margin-bottom: 4px;
-}
-
-.capture-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: #1D1D1F;
-  margin-bottom: 6px;
-}
-
-.capture-subtitle {
-  font-size: 14px;
-  color: #86868B;
-  line-height: 1.5;
-}
-
 .field-group {
   display: flex;
   flex-direction: column;
@@ -355,7 +335,7 @@ body {
 .field-label {
   font-size: 12px;
   font-weight: 600;
-  color: #86868B;
+  color: #6B6B6B;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   margin-bottom: 6px;
@@ -366,20 +346,22 @@ body {
   padding: 15px 16px;
   border-radius: 12px;
   border: none;
-  background: #2D2D2E;
+  background: #1C1C1E;
   font-size: 16px;
   font-family: inherit;
   font-weight: 600;
   color: #FFFFFF;
   outline: none;
   transition: box-shadow 0.2s;
+  border: 1.5px solid #3A3A3C;
 }
 
 .field-input:focus {
-  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.45);
+  border-color: #0071E3;
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.3);
 }
 
-.field-input::placeholder { color: #6B6B6B; font-weight: 400; }
+.field-input::placeholder { color: #5A5A5E; font-weight: 400; }
 
 /* Script selector */
 .capture-script-section {
@@ -391,7 +373,7 @@ body {
 .capture-script-label {
   font-size: 12px;
   font-weight: 600;
-  color: #86868B;
+  color: #6B6B6B;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   margin-bottom: 12px;
@@ -406,11 +388,11 @@ body {
 .capture-script-chip {
   padding: 13px 16px;
   border-radius: 12px;
-  background: white;
-  border: 1.5px solid #D2D2D7;
+  background: #1C1C1E;
+  border: 1.5px solid #3A3A3C;
   font-size: 14px;
   font-weight: 600;
-  color: #1D1D1F;
+  color: #FFFFFF;
   font-family: inherit;
   cursor: pointer;
   text-align: left;
@@ -422,7 +404,7 @@ body {
 .capture-script-chip.selected {
   border-color: transparent;
   color: white;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
 }
 
 /* Bottom action bar */
@@ -432,7 +414,7 @@ body {
   left: 0;
   right: 0;
   padding: 16px 0 28px;
-  background: linear-gradient(to top, #F5F5F7 80%, transparent 100%);
+  background: linear-gradient(to top, #000 80%, transparent 100%);
   display: flex;
   justify-content: center;
 }
@@ -472,7 +454,7 @@ body {
   padding: 18px 20px;
   background: transparent;
   color: #86868B;
-  border: 1.5px solid #D2D2D7;
+  border: 1.5px solid #3A3A3C;
   border-radius: 14px;
   font-size: 15px;
   font-weight: 600;
