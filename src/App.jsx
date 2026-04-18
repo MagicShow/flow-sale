@@ -167,15 +167,17 @@ export default function App() {
 
   const resolveText = useCallback((text) => {
     if (!text) return ''
-    return text.replace(/\[([A-Z_]+)\]/g, (_, key) => {
+    return text.replace(/\[([A-Z_ ]+)\]/g, (_, key) => {
       const lookup = {
         NAME: vars.clientName || '[NAME]',
+        LAST NAME: vars.clientLast || '[LAST NAME]',
         LAST_NAME: vars.clientLast || '[LAST NAME]',
-        YOUR_NAME: vars.yourName || '[YOUR NAME]',
+        YOUR NAME: vars.yourName || '[YOUR NAME]',
         UNION: vars.unionName || '[UNION]',
+        INSERT UNION: vars.unionName || '[INSERT UNION]',
         SPONSOR: vars.sponsorName || '[SPONSOR]',
-        BENEFICIARY_NAME: vars.beneficiary || '[BENEFICIARY NAME]',
-        SPOUSE_NAME: vars.spouseName || '[SPOUSE NAME]',
+        BENEFICIARY NAME: vars.beneficiary || '[BENEFICIARY NAME]',
+        SPOUSE NAME: vars.spouseName || '[SPOUSE NAME]',
         SPOUSE: vars.spouseName || '[SPOUSE]',
         TIME: '3:00 PM',
       }
