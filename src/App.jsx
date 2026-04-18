@@ -132,12 +132,14 @@ function LeadCapture({ onStart }) {
       </div>
 
       <div className="capture-footer">
-        <button className="capture-go-btn" onClick={() => onStart(fields, selectedScript)}>
-          Launch <span aria-hidden="true">🚀</span>
-        </button>
-        <button className="capture-skip-btn" onClick={handleSkip}>
-          Skip
-        </button>
+        <div className="capture-footer-inner">
+          <button className="capture-go-btn" onClick={() => onStart(fields, selectedScript)}>
+            Launch <span aria-hidden="true">🚀</span>
+          </button>
+          <button className="capture-skip-btn" onClick={handleSkip}>
+            Skip
+          </button>
+        </div>
       </div>
     </div>
   )
